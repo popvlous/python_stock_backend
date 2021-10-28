@@ -3,7 +3,7 @@ from datetime import datetime
 
 import aiohttp
 import requests
-from flask import app
+from flask import app, current_app
 
 from model import Orders
 
@@ -32,9 +32,19 @@ class Object:
 
 def sendActionRecordByOne(data_info):
     url = "https://member-api.tpp.org.tw/api/actionRecord"
-    response_info = requests.post(url, data=data_info)
+    headers = {
+        "Content-Type": "application/json"
 
+    }
+    data_json = json.dumps(data_info)
+    current_app.logger.error(f'{data_info.account}開始發送資料')
+    try:
+        response_info = requests.post(url, headers=headers, json=data_json)
+    except Exception as error:
+        current_app.logger.error(f'{data_info.account} call api address: {url} 發生錯誤: {error}')
+        return 404
     if not response_info:
         return None
-    order_details = json.loads(response_info.content.decode("utf-8").replace("'", '"'))
-    return order_details
+    else:
+        order_details = json.loads(response_info.content.decode("utf-8").replace("'", '"'))
+        return order_details
