@@ -14,11 +14,11 @@ class Config(object):
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'db.sqlite3')
     SQLALCHEMY_DATABASE_URI = '{}://{}:{}@{}:{}/{}?autocommit=true'.format(
         'mysql',
-        'pyrarcdev',
-        'dev2021api0322',
-        '103.252.199.14',
+        'civetpublic',
+        'Foxconn99',
+        '104.155.228.163',
         3306,
-        'pcs'
+        'civet_public_srv'
         # 'mysql',
         # 'root',
         # 'root',
@@ -34,21 +34,13 @@ class Config(object):
     }
 
     JOBS = [{
-        'id': 'bcjob',
-        'func': 'jobs:bcjob',
+        'id': 'sendActionRecordJob',
+        'func': 'jobs:sendActionRecordJob',
         'trigger': 'interval',
-        'seconds': 30
-    }, {
-        'id': 'bclitemjob',
-        'func': 'jobs:bclitemjob',
-        'trigger': 'interval',
-        'seconds': 30
-    }
-    ]
+        'seconds': 10
+    }]
     SCHEDULER_TIMEZONE = 'Asia/Shanghai'  # 配置時區
 
-
-20
 SCHEDULER_API_ENABLED = True  # 新增API
 
 
@@ -63,11 +55,11 @@ class ProductionConfig(Config):
     # PostgreSQL database
     SQLALCHEMY_DATABASE_URI = '{}://{}:{}@{}:{}/{}?autocommit=true'.format(
         'mysql',
-        'pyrarcdev',
-        'dev2021api0322',
-        '192.168.110.18',
+        'civetpublic',
+        'Foxconn99',
+        '104.155.228.163',
         3306,
-        'pcs'
+        'civet_public_srv'
     )
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
