@@ -5,6 +5,7 @@ import aiohttp
 import requests
 from flask import app, current_app
 
+from app import config
 from model import Orders
 
 token = "SEY3QW9ES2ZBbw=="
@@ -31,20 +32,31 @@ class Object:
 
 
 def sendActionRecordByOne(data_info):
-    url = "https://member-api.tpp.org.tw/api/actionRecord"
+    url = config.DOMAIN_URL + "api/actionRecord"
     headers = {
         "Content-Type": "application/json"
 
     }
-    data_json = json.dumps(data_info)
-    current_app.logger.error(f'{data_info.account}開始發送資料')
+    # data_json = json.dumps(data_info, default=defaultconverter)
+    # data = {
+    #     'account': 'popvlous',
+    #     'code': '00001',
+    #     'expandFlag': '',
+    #     'actionDate': '2021-11-02',
+    #     'token': 'ENXsCAbfyXYqincPulKe'
+    # }
+    current_app.logger.info(f'sendActionRecordByOne 開始發送資料')
     try:
-        response_info = requests.post(url, headers=headers, json=data_json)
+        response_info = requests.post(url, headers=headers, json=data_info)
     except Exception as error:
         current_app.logger.error(f'{data_info.account} call api address: {url} 發生錯誤: {error}')
         return 404
     if not response_info:
         return None
     else:
-        order_details = json.loads(response_info.content.decode("utf-8").replace("'", '"'))
-        return order_details
+        response_details = json.loads(response_info.content.decode("utf-8").replace("'", '"'))
+        return response_details
+
+def defaultconverter(o):
+    if isinstance(o, datetime):
+        return o.__str__()

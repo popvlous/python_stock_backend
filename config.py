@@ -18,7 +18,7 @@ class Config(object):
         'Foxconn99',
         '104.155.228.163',
         3306,
-        'civet_public_srv'
+        'openfire'
         # 'mysql',
         # 'root',
         # 'root',
@@ -33,13 +33,27 @@ class Config(object):
         "pool_recycle": 300,
     }
 
+    # JOBS = [{
+    #     'id': 'sendActionRecordJob',
+    #     'func': 'jobs:sendActionRecordJob',
+    #     'trigger': 'interval',
+    #     'seconds': 10
+    # }]
+
     JOBS = [{
         'id': 'sendActionRecordJob',
         'func': 'jobs:sendActionRecordJob',
-        'trigger': 'interval',
-        'seconds': 10
+        'trigger': 'cron',
+        'day_of_week': '*',
+        'hour': 16,
+        'minute': 17,
+        'second': 10,
     }]
+
     SCHEDULER_TIMEZONE = 'Asia/Shanghai'  # 配置時區
+
+    DOMAIN_URL = 'https://member-api.tpp.org.tw/'
+    DATA_TOKEN = 'ENXsCAbfyXYqincPulKe'
 
 SCHEDULER_API_ENABLED = True  # 新增API
 

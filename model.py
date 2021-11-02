@@ -33,6 +33,26 @@ class ViewDict(db.Model):
         }
 
 
+class TPP_API_tppuser_behavior_v(db.Model):
+    __viewname__ = 'TPP_API_tppuser_behavior_v'
+    id = db.Column(db.Integer, primary_key=True)
+    account = db.Column(db.String(50))
+    code = db.Column(db.String(50))
+    actionDate = db.Column(db.String(50))
+
+    def __init__(self, id, account, code, actionDate):
+        self.id = id
+        self.account = account
+        self.code = code
+        self.actionDate = actionDate
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'account': self.account,
+            'code': self.code,
+            'actionDate': self.actionDate
+        }
 
 
 class Orders(db.Model):
