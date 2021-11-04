@@ -55,6 +55,8 @@ class Config(object):
     DOMAIN_URL = 'https://member-api.tpp.org.tw/'
     DATA_TOKEN = 'ENXsCAbfyXYqincPulKe'
 
+    LINE_TOKEN = 'qUYZTP3u08ugL8mCGJNSKJis45VlHO3RnjWdCuWUcoZ'
+
 SCHEDULER_API_ENABLED = True  # 新增API
 
 
@@ -94,6 +96,8 @@ class ProductionConfig(Config):
 
     DOMAIN_URL = 'https://member-api.tpp.org.tw/'
     DATA_TOKEN = 'ENXsCAbfyXYqincPulKe'
+
+    LINE_TOKEN = 'qUYZTP3u08ugL8mCGJNSKJis45VlHO3RnjWdCuWUcoZ'
 
 
 class DebugConfig(Config):

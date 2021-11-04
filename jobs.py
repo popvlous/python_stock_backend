@@ -4,7 +4,7 @@ from flask import current_app
 
 from app import app, config
 from model import TPP_API_tppuser_behavior_v
-from util import sendActionRecordByOne
+from util import sendActionRecordByOne, lineNotifyMessage
 
 
 def sendActionRecordJob():
@@ -13,6 +13,7 @@ def sendActionRecordJob():
         try:
             data = TPP_API_tppuser_behavior_v.query.all()
             current_app.logger.info( f' 共 {len(data)} 筆，開始拋送資料 ')
+            lineNotifyMessage(config.LINE_TOKEN, f' 溫馨提醒: Mysql 共 {len(data)} 筆，開始拋送資料 ')
             for data_info in data:
                 data_json = {
                     'account': data_info.account,
@@ -28,5 +29,6 @@ def sendActionRecordJob():
                 else:
                     current_app.logger.error(
                         f' {data_info.account} 拋送資料發生錯誤 code: {status["code"]} message: {status["message"]}')
+            lineNotifyMessage(config.LINE_TOKEN, f' 溫馨提醒: Mysql 共 {len(data)} 筆，拋送資料完畢 ')
         except Exception as err:
             current_app.logger.error(f'sendActionRecord 發生錯誤: {err}')
