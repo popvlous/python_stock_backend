@@ -33,22 +33,22 @@ class Config(object):
         "pool_recycle": 300,
     }
 
-    # JOBS = [{
-    #     'id': 'sendActionRecordJob',
-    #     'func': 'jobs:sendActionRecordJob',
-    #     'trigger': 'interval',
-    #     'seconds': 10
-    # }]
-
     JOBS = [{
         'id': 'sendActionRecordJob',
         'func': 'jobs:sendActionRecordJob',
-        'trigger': 'cron',
-        'day_of_week': '*',
-        'hour': 16,
-        'minute': 17,
-        'second': 10,
+        'trigger': 'interval',
+        'seconds': 10
     }]
+    #
+    # JOBS = [{
+    #     'id': 'sendActionRecordJob',
+    #     'func': 'jobs:sendActionRecordJob',
+    #     'trigger': 'cron',
+    #     'day_of_week': '*',
+    #     'hour': 16,
+    #     'minute': 17,
+    #     'second': 10,
+    # }]
 
     SCHEDULER_TIMEZONE = 'Asia/Shanghai'  # 配置時區
 
@@ -71,7 +71,7 @@ class ProductionConfig(Config):
         'mysql',
         'civetpublic',
         'Foxconn99',
-        '104.155.228.163',
+        '10.47.144.3',
         3306,
         'civet_public_srv'
     )
@@ -82,6 +82,18 @@ class ProductionConfig(Config):
         "pool_pre_ping": True,
         "pool_recycle": 300,
     }
+
+    JOBS = [{
+        'id': 'sendActionRecordJob',
+        'func': 'jobs:sendActionRecordJob',
+        'trigger': 'interval',
+        'seconds': 10
+    }]
+
+    SCHEDULER_TIMEZONE = 'Asia/Shanghai'  # 配置時區
+
+    DOMAIN_URL = 'https://member-api.tpp.org.tw/'
+    DATA_TOKEN = 'ENXsCAbfyXYqincPulKe'
 
 
 class DebugConfig(Config):

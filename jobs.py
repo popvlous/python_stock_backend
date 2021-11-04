@@ -3,7 +3,7 @@ import datetime
 from flask import current_app
 
 from app import app, config
-from model import Orders, db, OrdersLineItems, ViewDict, TPP_API_tppuser_behavior_v
+from model import TPP_API_tppuser_behavior_v
 from util import sendActionRecordByOne
 
 
@@ -12,6 +12,7 @@ def sendActionRecordJob():
     with app.app_context():
         try:
             data = TPP_API_tppuser_behavior_v.query.all()
+            current_app.logger.info( f' 共 {len(data)} 筆，開始拋送資料 ')
             for data_info in data:
                 data_json = {
                     'account': data_info.account,

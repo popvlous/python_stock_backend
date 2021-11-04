@@ -1,12 +1,10 @@
 import json
 from datetime import datetime
 
-import aiohttp
 import requests
 from flask import app, current_app
 
 from app import config
-from model import Orders
 
 token = "SEY3QW9ES2ZBbw=="
 
