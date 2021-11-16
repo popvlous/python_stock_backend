@@ -26,6 +26,11 @@ class Config(object):
         # 3306,
         # 'pcs'
     )
+
+    SQLALCHEMY_BINDS = {
+        'db2': 'mysql://civetpublic:Foxconn99@104.155.228.163:3306/civet_public_srv'
+    }
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     SQLALCHEMY_ENGINE_OPTIONS = {
@@ -37,6 +42,9 @@ class Config(object):
         'id': 'sendActionRecordJob',
         'func': 'jobs:sendActionRecordJob',
         'trigger': 'interval',
+        #'day_of_week': '*',
+        #'hour': 22,
+        #'minute': 44,
         'seconds': 10
     }]
     #
@@ -54,10 +62,10 @@ class Config(object):
 
     DOMAIN_URL = 'https://member-api.tpp.org.tw/'
     DATA_TOKEN = 'ENXsCAbfyXYqincPulKe'
-
+    
     LINE_TOKEN = 'qUYZTP3u08ugL8mCGJNSKJis45VlHO3RnjWdCuWUcoZ'
-
-SCHEDULER_API_ENABLED = True  # 新增API
+    
+    SCHEDULER_API_ENABLED = True  # 新增API
 
 
 class ProductionConfig(Config):
@@ -75,7 +83,7 @@ class ProductionConfig(Config):
         'Foxconn99',
         '10.47.144.3',
         3306,
-        'civet_public_srv'
+        'openfire'
     )
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -88,15 +96,18 @@ class ProductionConfig(Config):
     JOBS = [{
         'id': 'sendActionRecordJob',
         'func': 'jobs:sendActionRecordJob',
-        'trigger': 'interval',
-        'seconds': 10
+        'trigger': 'cron',
+        'day_of_week': '*',
+        'hour': 18,
+        'minute': 35,
+        'second': 10
     }]
 
     SCHEDULER_TIMEZONE = 'Asia/Shanghai'  # 配置時區
 
     DOMAIN_URL = 'https://member-api.tpp.org.tw/'
     DATA_TOKEN = 'ENXsCAbfyXYqincPulKe'
-
+    
     LINE_TOKEN = 'qUYZTP3u08ugL8mCGJNSKJis45VlHO3RnjWdCuWUcoZ'
 
 

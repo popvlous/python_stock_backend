@@ -53,3 +53,22 @@ class TPP_API_tppuser_behavior_v(db.Model):
             'code': self.code,
             'actionDate': self.actionDate
         }
+
+class TPP_API_tppuser_votepersons_v(db.Model):
+    __bind_key__ = 'db2'
+    __viewname__ = 'TPP_API_tppuser_votepersons_v'
+    account = db.Column(db.String(50), primary_key=True)
+    code = db.Column(db.String(50))
+    actionDate = db.Column(db.String(50))
+
+    def __init__(self, account, code, actionDate):
+        self.account = account
+        self.code = code
+        self.actionDate = actionDate
+
+    def to_json(self):
+        return {
+            'account': self.account,
+            'code': self.code,
+            'actionDate': self.actionDate
+        }

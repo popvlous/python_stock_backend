@@ -55,10 +55,36 @@ def sendActionRecordByOne(data_info):
         response_details = json.loads(response_info.content.decode("utf-8").replace("'", '"'))
         return response_details
 
+
+def sendActionRecordSet(data, t_name):
+    try:
+        current_app.logger.info( f' {t_name} 共 {len(data)} 筆，開始拋送資料 ')
+        lineNotifyMessage(config.LINE_TOKEN, f' {t_name} 溫馨提醒: Mysql 共 {len(data)} 筆，開始拋送資料 ')
+        for data_info in data:
+            data_json = {
+                'account': data_info.account,
+                'code': data_info.code,
+                'expandFlag': '',
+                'actionDate': data_info.actionDate.strftime('%Y-%m-%dT%H:%M:%S') if isinstance(data_info.actionDate, datetime) else data_info.actionDate,
+                'token': config.DATA_TOKEN
+            }
+            current_app.logger.info(f' 資料: {data_json}')
+            status = sendActionRecordByOne(data_json)
+            if status["code"] == "00000":
+                current_app.logger.info(
+                    f' {data_info.account} 拋送資料成功 code: {status["code"]} data: {status["data"]}')
+            else:
+                current_app.logger.error(
+                    f' {data_info.account} 拋送資料發生錯誤 code: {status["code"]} message: {status["message"]}')
+        lineNotifyMessage(config.LINE_TOKEN, f' 溫馨提醒: Mysql {t_name} 共 {len(data)} 筆，拋送資料完畢 ')
+        return 200
+    except Exception as err:
+        current_app.logger.error(f' {t_name} sendActionRecord 發生錯誤: {err}')
+        return 404
+
 def defaultconverter(o):
     if isinstance(o, datetime):
         return o.__str__()
-
 
 def lineNotifyMessage(token, msg):
     headers = {
